@@ -31,7 +31,10 @@ namespace MhLabs.WebApi.Observability.Framework.Metrics
             sb.Append($" method:{request.HttpMethod}");
             sb.Append($" status_code:{response.StatusCode}");
 
-            _client.Gauge("api.requests.elapsed", (int) elapsed, sb.ToString());
+            var tags = sb.ToString();
+
+            _client.Gauge("api.requests.elapsed", (int) elapsed, tags);
+            _client.Increment("api.requests.count", tags: tags);
         }
     }
 }
