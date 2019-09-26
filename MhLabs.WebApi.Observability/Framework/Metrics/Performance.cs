@@ -20,10 +20,9 @@ namespace MhLabs.WebApi.Observability.Framework.Metrics
 
             var sb = new StringBuilder();
 
-            sb.Append("route:");
             sb.Append(route);
-
             sb.Replace(Settings.Stack, string.Empty);
+            sb.Insert(0, "route:/");
             sb.Replace("{", string.Empty);
             sb.Replace("}", string.Empty);
             sb.Replace("_", string.Empty);

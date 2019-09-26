@@ -5,7 +5,7 @@ using MhLabs.SerilogExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ecom_order_subscription.Framework.Filters
+namespace MhLabs.WebApi.Observability.Framework.Filters
 {
     public class TemplateRouteMetricsFilter : IAsyncResourceFilter
     {
