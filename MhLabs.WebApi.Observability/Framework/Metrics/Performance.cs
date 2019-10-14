@@ -36,4 +36,6 @@ namespace MhLabs.WebApi.Observability.Framework.Metrics
             _client.Increment("api.requests.count", tags: tags);
         }
     }
+
+    
 }
