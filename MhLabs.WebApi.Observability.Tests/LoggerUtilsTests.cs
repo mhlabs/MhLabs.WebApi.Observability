@@ -1,5 +1,6 @@
 ﻿using MhLabs.WebApi.Observability.Framework.Utilities;
 using Microsoft.Extensions.Logging;
+using System;
 using Xunit;
 
 namespace MhLabs.WebApi.Observability.Tests
@@ -50,6 +51,21 @@ namespace MhLabs.WebApi.Observability.Tests
             // assert
             loggerMock.VerifyLog(LogLevel.Error, expected);
         }
+
+        [Fact]
+        public void TestLogException()
+        {
+            // arrange
+            var loggerMock = LoggerUtils.LoggerMock<MyHandler>();
+            var handler = new MyHandler(loggerMock.Object);
+            var expected = "Hello exception";
+
+            // act
+            var exception = Assert.Throws<Exception>(() => handler.LogException(expected));
+
+            // assert
+            loggerMock.VerifyLog(LogLevel.Error, expected);
+        }
     }
 
     public class MyHandler
@@ -75,5 +91,17 @@ namespace MhLabs.WebApi.Observability.Tests
             _logger.LogError(textToLog);
         }
 
+        public void LogException(string textToLog)
+        {
+            try
+            {
+                throw new Exception();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, textToLog);
+                throw;
+            }
+        }
     }
 }
