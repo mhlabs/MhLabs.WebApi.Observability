@@ -38,7 +38,14 @@ namespace MhLabs.WebApi.Observability.Framework.Utilities
         /// <param name="times"></param>
         public static void VerifyLog<T>(this Mock<ILogger<T>> loggerMock, LogLevel level, string message, Times times)
         {
-            loggerMock.Verify(l => l.Log<Object>(level, It.IsAny<EventId>(), It.Is<Object>(o => o.ToString() == message), null, It.IsAny<Func<Object, Exception, String>>()), times);
+            loggerMock.Verify(
+                l => l.Log(
+                    level, 
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((o, t) => string.Equals(message, o.ToString(), StringComparison.InvariantCultureIgnoreCase)),
+                    It.IsAny<Exception>(),
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                times);
         }
     }
 }
