@@ -1,5 +1,6 @@
 using System;
 using MhLabs.SerilogExtensions;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -15,7 +16,11 @@ namespace MhLabs.WebApi.Observability.Framework.Logging
         internal static ILogger Create()
         {
             Serilog.Debugging.SelfLog.Enable(Console.Error);
-            
+
+            IConfiguration config = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .Build();
+
             return Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
@@ -31,6 +36,8 @@ namespace MhLabs.WebApi.Observability.Framework.Logging
                 .Enrich.With<RouteTemplateEnrichment>()
                 .Enrich.WithProperty("Stack", Settings.Stack)
                 .WriteTo.Console(new MhLabsCompactJsonFormatter())
+                .ReadFrom
+                .Configuration(config)
                 .CreateLogger();
         }
 
