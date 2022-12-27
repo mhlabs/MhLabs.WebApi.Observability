@@ -1,5 +1,14 @@
 name: publish to nuget
-on: push
+
+on: 
+  push:
+    branches:
+      - '*'
+      - '!main'
+      - '!master'
+      - '!develop'
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+
 jobs:
   publish:
     name: build, pack & publish
