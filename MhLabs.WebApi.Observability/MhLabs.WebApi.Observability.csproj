@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>3.1.0-beta02</Version>
+    <Version>3.1.0-beta03</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>MhLabs.WebApi.Observability</PackageId>
     <IsPackable>true</IsPackable>
