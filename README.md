@@ -1,5 +1,20 @@
 # MhLabs.WebApi.Observability
 
+## Configure log levels in a lambda
+To change the log level in a lambda set the Serilog__MinimumLevel environment variable to the desired level, see example below. Please note that when running on Windows the environment variable name should be `Serilog:MinimumLevel`
+
+```
+  MyLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 10
+      CodeUri: ./my_lambda_project
+      Handler: my_lambda_project::my_lambda_project.Functions.MyFunction::FunctionHandler
+      Environment:
+        Variables:
+          Serilog__MinimumLevel: Debug
+```
+
 ## Pushing a new version
 Set the `Version` number in the <a href="https://github.com/mhlabs/MhLabs.WebApi.Observability/blob/master/MhLabs.WebApi.Observability/MhLabs.WebApi.Observability.csproj"> .csproj-file</a> before pushing. If an existing version is pushed the <a href="https://github.com/mhlabs/MhLabs.WebApi.Observability/actions">build will fail</a>.
 
